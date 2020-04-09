@@ -1,10 +1,10 @@
 # ITP 365 HW06 - Spring 2020 #
 
 ## Student information... ##
-Name: Tommy Trojan
+Name: Amy (Yue) Liu
 
-Email: ttrojan@usc.edu
+Email: liu861@usc.edu
 
-Platform: [PC/MAC]
+Platform: [MAC]
 
 ### Notes ###
