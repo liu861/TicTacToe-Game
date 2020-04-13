@@ -1,4 +1,7 @@
 #include "catch.hpp"
+#include "tttgame.h"
+#include "tttgameai.h"
+#include "tttgamedata.h"
 
 // Helper function declarations (don't change this)
 extern bool CheckTextFilesSame(const std::string& fileNameA,
@@ -8,9 +11,17 @@ extern bool CheckTextFilesSame(const std::string& fileNameA,
 TEST_CASE("Student tests", "[student]") 
 {
     // TODO: Add tests here!
-	SECTION("Test1")
+	SECTION("Test constructor for tttgame.cpp")
 	{
-		REQUIRE(true);
+        TicTacToeGame game;
+        TicTacToeGame();
+        for(int i = 0; i < 3; i++)
+        {
+            for(int j = 0; j < 3; j++)
+            {
+                REQUIRE(game.setSquareState(i, j, GameState::Empty) == true);
+            }
+        }
 	}
 }
 
