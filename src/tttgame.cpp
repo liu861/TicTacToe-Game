@@ -1,4 +1,5 @@
 #include "tttgame.h"
+#include <stdexcept>
 
 // Function: Constructor
 // Purpose: Creates an "empty board" in currentState --
@@ -36,12 +37,15 @@ GameState TicTacToeGame::getBoard() const
 // Returns: True to indicate the state was set successfully
 bool TicTacToeGame::setSquareState(unsigned short row, unsigned short col, GameState::SquareState state)
 {
-	//return true if SquareState has been set
-    if(currentState.mBoard[row][col] == state)
+    if(row < 3 && col < 3 && currentState.mBoard[row][col] == GameState::Empty)
     {
+        currentState.mBoard[row][col] = state;
         return true;
     }
-	return false;
+    else
+    {
+        return false;
+    }
 }
 
 // Function: setSquareState
@@ -53,68 +57,50 @@ bool TicTacToeGame::setSquareState(unsigned short row, unsigned short col, GameS
 bool TicTacToeGame::setSquareState(unsigned short square, GameState::SquareState state)
 {
 	//if current SquareState has been set
-    if(square == 1)
+    if(square == 1 && currentState.mBoard[0][0] == GameState::Empty)
     {
-        if(currentState.mBoard[0][0] == state)
-        {
-            return true;
-        }
+        currentState.mBoard[0][0] = state;
+        return true;
     }
-    else if(square == 2)
+    else if(square == 2 && currentState.mBoard[0][1] == GameState::Empty)
     {
-        if(currentState.mBoard[0][1] == state)
-        {
-            return true;
-        }
+        currentState.mBoard[0][1] = state;
+        return true;
     }
-    else if(square == 3)
+    else if(square == 3 && currentState.mBoard[0][2] == GameState::Empty)
     {
-        if(currentState.mBoard[0][2] == state)
-        {
-            return true;
-        }
+        currentState.mBoard[0][2] = state;
+        return true;
     }
-    else if(square == 4)
+    else if(square == 4 && currentState.mBoard[1][0] == GameState::Empty)
     {
-        if(currentState.mBoard[1][0] == state)
-        {
-            return true;
-        }
+        currentState.mBoard[1][0] = state;
+        return true;
     }
-    else if(square == 5)
+    else if(square == 5 && currentState.mBoard[1][1] == GameState::Empty)
     {
-        if(currentState.mBoard[1][1] == state)
-        {
-            return true;
-        }
+        currentState.mBoard[1][1] = state;
+        return true;
     }
-    else if(square == 6)
+    else if(square == 6 && currentState.mBoard[1][2] == GameState::Empty)
     {
-        if(currentState.mBoard[1][2] == state)
-        {
-            return true;
-        }
+        currentState.mBoard[1][2] = state;
+        return true;
     }
-    else if(square == 7)
+    else if(square == 7 && currentState.mBoard[2][0] == GameState::Empty)
     {
-        if(currentState.mBoard[2][0] == state)
-        {
-            return true;
-        }
+        currentState.mBoard[2][0] = state;
+        return true;
     }
-    else if(square == 8)
+    else if(square == 8 && currentState.mBoard[2][1] == GameState::Empty)
     {
-        if(currentState.mBoard[2][1] == state)
-        {
-            return true;
-        }
+        currentState.mBoard[2][1] = state;
+        return true;
     }
-    else if(square == 9)
+    else if(square == 9 && currentState.mBoard[2][2] == GameState::Empty)
     {
-        if(currentState.mBoard[2][2] == state)
-        {
-            return true;
-        }
+        currentState.mBoard[2][2] = state;
+        return true;
     }
 	return false;
 }
@@ -190,7 +176,7 @@ char TicTacToeGame::getWinner()
         return 'O';
     }
     
-    //now check for a tie, no winners and no empty spaces left
+    //now check for a tie: no winners and no empty spaces left
     int count = 0;
     for(int i = 0; i < 3; i++)
     {
