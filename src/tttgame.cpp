@@ -188,7 +188,7 @@ char TicTacToeGame::getWinner()
             }
         }
     }
-    if(count == 0 && getWinner() != 'X' && getWinner() != 'O')
+    if(count == 0)
     {
         return 'N';
     }
