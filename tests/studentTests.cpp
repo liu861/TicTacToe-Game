@@ -134,10 +134,24 @@ TEST_CASE("Student tests", "[student]")
         //test for X win
         REQUIRE(GetScore(testScore->mState) == -1);
         //test MinPlayer
+        //empty board
+        REQUIRE(MinPlayer(root) == 0.0);
         //test MaxPlayer
+        //empty board
+        REQUIRE(MaxPlayer(root) == 0.0);
         //test MinimaxDecide
+        //???
         //test pickMove
-        
+        //given a winning move for X next, O should prevent it
+        /*TicTacToeGame game;
+        game.setSquareState(2, GameState::O);
+        game.setSquareState(5, GameState::X);
+        game.setSquareState(9, GameState::X);
+        REQUIRE(pickMove(game.getBoard()) == 1);
+        //given a winning move for O next, O should choose it
+        game.setSquareState(1, GameState::O);
+        game.setSquareState(7, GameState::X);
+        REQUIRE(pickMove(game.getBoard()) == 3);*/
     }
 }
 

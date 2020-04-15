@@ -1,4 +1,5 @@
 #include "tttgameai.h"
+#include <iostream>
 
 // Function: GenStates
 // Purpose: Generates the game tree starting at the inputted root
@@ -201,7 +202,7 @@ const GTNode* MinimaxDecide(const GTNode* root)
         if(largest > maxScore)
         {
             maxScore = largest;
-            //set move to the largest child
+            //set move to child
             move = child;
         }
     }
@@ -223,23 +224,9 @@ unsigned pickMove(const GameState& board)
     root->mState = board;
     //generate all subtrees states
     GenStates(root, false);
-    for(const GTNode* child : root->mChildren)
-    {
-        if(MaxPlayer(child) == 1.0)
-        {
-            winState = child;
-        }
-    }
-    if(winState == nullptr)
-    {
-        for(const GTNode* child : root->mChildren)
-        {
-            if(MaxPlayer(child) == 0.0)
-            {
-                winState = child;
-            }
-        }
-    }
+    //set winState to subtree!
+    winState = MinimaxDecide(root);
+    //find which square O should be in
     int row = 0;
     int col = 0;
     for(int i = 0; i < 3; i++)

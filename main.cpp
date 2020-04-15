@@ -13,9 +13,10 @@ int main(int argc, const char* argv[])
 	term.showCursor(false);
 
     char state = '0'; // The game board's state
-    //creating game board
+    //creating game board for output in terminal
     char board[3][3] = {{'1', '2', '3'}, {'4', '5', '6'}, {'7', '8', '9'}};
     TicTacToeGame game;
+    //create stringstream for appending text
     std::stringstream ss;
     
     //set player to X first
@@ -33,38 +34,43 @@ int main(int argc, const char* argv[])
         ss << "\t    " << board[2][0] << " | " << board[2][1] << " | " << board[2][2] << "\n";
         ss << "\n\n\n\n";
         
-        ss<< "___________________________________\n";
+        ss << "__________________________________\n";
+        term.appendText(ss.str());
+        pause(5000);
         //check if game is over
         if(game.getWinner() == 'N')
         {
             term.appendText("!!!!!!!!!!!! TIE GAME !!!!!!!!!!!!");
+            pause(5000);
         }
         if(game.getWinner() == 'O')
         {
             term.appendText("!!!!!!!!!!!!! O WINS !!!!!!!!!!!!!");
+            pause(5000);
         }
         if(game.getWinner() == 'X')
         {
             term.appendText("!!!!!!!!!!!!! X WINS !!!!!!!!!!!!!");
+            pause(5000);
         }
         if(player == "X")
         {
             ss << "X's move...";
             term.appendText(ss.str());
-            pause(1000);
+            pause(5000);
             while (term.hasEvents())
             {
                 GEvent e = term.getEvent();
                 if (e.Type == EventType::KeyDown)
                 {
                     int key = e.Event.Key.Code;
-                    if (key == 1 || key == 2 || key == 3 ||
-                        key == 4 || key == 5 || key == 6 ||
-                        key == 7 || key == 8 || key == 9)
+                    if (key == '1' || key == '2' || key == '3' ||
+                        key == '4' || key == '5' || key == '6' ||
+                        key == '7' || key == '8' || key == '9')
                     {
                         state = key;
                     }
-                    else if (key == 0)
+                    else if (key == '0')
                     {
                         return 0;
                     }
@@ -73,74 +79,55 @@ int main(int argc, const char* argv[])
             switch(state)
             {
             case 1:
-                    //put player's symbol in the first square
                     if(board[0][0] != '1')
                     {
                         break;
                     }
-                    if(player == "X")
-                    {
-                        //put X in first square
-                        board[0][0] = 'X';
-                        game.setSquareState(1, GameState::X);
-                        ss << 1;
-                    }
+                    //put X in first square
+                    board[0][0] = 'X';
+                    game.setSquareState(1, GameState::X);
+                    ss << 1;
                     break;
             case 2:
                     if(board[0][1] != '2')
                     {
                         break;
                     }
-                    //put player's symbol in the second square
-                    if(player == "X")
-                    {
-                        //put X in second square
-                        board[0][1] = 'X';
-                        game.setSquareState(2, GameState::X);
-                        ss << 2;
-                    }
+                    //put X in second square
+                    board[0][1] = 'X';
+                    game.setSquareState(2, GameState::X);
+                    ss << 2;
                     break;
             case 3:
                     if(board[0][2] != '3')
                     {
                         break;
                     }
-                    //put player's symbol in the third square
-                    if(player == "X")
-                    {
-                        //put X in third square
-                        board[0][2] = 'X';
-                        game.setSquareState(3, GameState::X);
-                        ss << 3;
-                    }
+                  
+                    //put X in third square
+                    board[0][2] = 'X';
+                    game.setSquareState(3, GameState::X);
+                    ss << 3;
                     break;
             case 4:
                     if(board[1][0] != '4')
                     {
                         break;
                     }
-                    //put player's symbol in the fourth square
-                    if(player == "X")
-                    {
-                        //put X in fourth square
-                        board[1][0] = 'X';
-                        game.setSquareState(4, GameState::X);
-                        ss << 4;
-                    }
+                    //put X in fourth square
+                    board[1][0] = 'X';
+                    game.setSquareState(4, GameState::X);
+                    ss << 4;
                     break;
             case 5:
                     if(board[1][1] != '5')
                     {
                         break;
                     }
-                    //put player's symbol in the fifth square
-                    if(player == "X")
-                    {
-                        //put X in fifth square
-                        board[1][1] = 'X';
-                        game.setSquareState(5, GameState::X);
-                        ss << 5;
-                    }
+                    //put X in fifth square
+                    board[1][1] = 'X';
+                    game.setSquareState(5, GameState::X);
+                    ss << 5;
                     break;
             case 6:
                     //put player's symbol in the sixth square
@@ -148,13 +135,10 @@ int main(int argc, const char* argv[])
                     {
                         break;
                     }
-                    if(player == "X")
-                    {
-                        //put X in sixth square
-                        board[1][2] = 'X';
-                        game.setSquareState(6, GameState::X);
-                        ss << 6;
-                    }
+                    //put X in sixth square
+                    board[1][2] = 'X';
+                    game.setSquareState(6, GameState::X);
+                    ss << 6;
                     break;
             case 7:
                     //put player's symbol in the seventh square
@@ -162,13 +146,10 @@ int main(int argc, const char* argv[])
                     {
                         break;
                     }
-                    if(player == "X")
-                    {
-                        //put X in seventh square
-                        board[2][0] = 'X';
-                        game.setSquareState(7, GameState::X);
-                        ss << 7;
-                    }
+                    //put X in seventh square
+                    board[2][0] = 'X';
+                    game.setSquareState(7, GameState::X);
+                    ss << 7;
                     break;
             case 8:
                     //put player's symbol in the eighth square
@@ -176,13 +157,10 @@ int main(int argc, const char* argv[])
                     {
                         break;
                     }
-                    if(player == "X")
-                    {
-                        //put X in eighth square
-                        board[2][1] = 'X';
-                        game.setSquareState(8, GameState::X);
-                        ss << 8;
-                    }
+                    //put X in eighth square
+                    board[2][1] = 'X';
+                    game.setSquareState(8, GameState::X);
+                    ss << 8;
                     break;
             case 9:
                     //put player's symbol in the ninth square
@@ -190,13 +168,10 @@ int main(int argc, const char* argv[])
                     {
                         break;
                     }
-                    if(player == "X")
-                    {
-                        //put X in ninth square
-                        board[2][2] = 'X';
-                        game.setSquareState(9, GameState::X);
-                        ss << 9;
-                    }
+                    //put X in ninth square
+                    board[2][2] = 'X';
+                    game.setSquareState(9, GameState::X);
+                    ss << 9;
                     break;
             }
             term.appendText(ss.str());
@@ -257,6 +232,8 @@ int main(int argc, const char* argv[])
         {
             player = "X";
         }
+        term.appendText(ss.str());
+        pause(5000);
     }
 	return 0;
 }
