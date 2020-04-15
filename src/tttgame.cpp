@@ -42,10 +42,7 @@ bool TicTacToeGame::setSquareState(unsigned short row, unsigned short col, GameS
         currentState.mBoard[row][col] = state;
         return true;
     }
-    else
-    {
-        return false;
-    }
+    return false;
 }
 
 // Function: setSquareState

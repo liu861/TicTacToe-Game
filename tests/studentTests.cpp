@@ -95,7 +95,44 @@ TEST_CASE("Student tests", "[student]")
 	}
     SECTION("Tests for tttgameai.cpp")
     {
-        REQUIRE(true);
+        //create a new root gamestate
+        GTNode* root = new GTNode;
+        //create empty board
+        for(int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                root->mState.mBoard[i][j] = GameState::Empty;
+            }
+        }
+        //it's X's turn!
+        bool xPlayer = true;
+        GenStates(root, xPlayer);
+        REQUIRE(root->mChildren[0]->mState.mBoard[0][0] == GameState::X);
+        REQUIRE(root->mChildren[0]->mState.mBoard[0][1] == GameState::X);
+        //etc etc???
+        //test GetScore() function from manual board
+        GTNode* testScore = new GTNode;
+        testScore->mState.mBoard[0][0] = GameState::O;
+        testScore->mState.mBoard[0][1] = GameState::X;
+        testScore->mState.mBoard[0][2] = GameState::X;
+        testScore->mState.mBoard[1][0] = GameState::X;
+        testScore->mState.mBoard[1][1] = GameState::O;
+        testScore->mState.mBoard[1][2] = GameState::O;
+        testScore->mState.mBoard[2][0] = GameState::X;
+        testScore->mState.mBoard[2][1] = GameState::O;
+        testScore->mState.mBoard[2][2] = GameState::X;
+        //test for tie
+        REQUIRE(GetScore(testScore->mState) == 0);
+        testScore->mState.mBoard[2][1] = GameState::Empty;
+        testScore->mState.mBoard[2][2] = GameState::O;
+        //test for O win
+        REQUIRE(GetScore(testScore->mState) == 1);
+        testScore->mState.mBoard[2][1] = GameState::X;
+        testScore->mState.mBoard[2][2] = GameState::X;
+        //test for X win
+        REQUIRE(GetScore(testScore->mState) == -1);
+        
     }
 }
 

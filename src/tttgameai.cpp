@@ -37,10 +37,12 @@ void GenStates(GTNode* root, bool xPlayer)
                 //generate more child nodes for the child, using recursion
                 if(child->mState.mBoard[i][j] == GameState::Empty)
                 {
+                    //if it was just X's turn, now it's O's turn
                     if(xPlayer)
                     {
                         GenStates(child, false);
                     }
+                    //otherwise, it's X's turn again!
                     else
                     {
                         GenStates(child, true);
@@ -60,8 +62,67 @@ void GenStates(GTNode* root, bool xPlayer)
 //        -1.0 to indicate X wins on this board
 float GetScore(const GameState& state)
 {
-	// TODO: IMPLEMENT
-	return 0.0; // FIX RETURN VALUE
+    for(int i = 0; i < 3; i++)
+       {
+           //check horizontals for X win
+           if(state.mBoard[i][0] == GameState::X &&
+              state.mBoard[i][1] == GameState::X &&
+              state.mBoard[i][2] == GameState::X)
+           {
+               return -1.0;
+           }
+           //check horizontals for O win
+           if(state.mBoard[i][0] == GameState::O &&
+              state.mBoard[i][1] == GameState::O &&
+              state.mBoard[i][2] == GameState::O)
+           {
+               return 1.0;
+           }
+           
+           //check verticals for X win
+           if(state.mBoard[0][i] == GameState::X &&
+              state.mBoard[1][i] == GameState::X &&
+              state.mBoard[2][i] == GameState::X)
+           {
+               return -1.0;
+           }
+           //check verticals for O win
+           if(state.mBoard[0][i] == GameState::O &&
+              state.mBoard[1][i] == GameState::O &&
+              state.mBoard[2][i] == GameState::O)
+           {
+               return 1.0;
+           }
+       }
+
+       //check diagonals for X win
+       if (state.mBoard[0][0] == GameState::X &&
+           state.mBoard[1][1] == GameState::X &&
+           state.mBoard[2][2] == GameState::X)
+       {
+           return -1.0;
+       }
+       else if (state.mBoard[0][2] == GameState::X &&
+                state.mBoard[1][1] == GameState::X &&
+                state.mBoard[2][0] == GameState::X)
+       {
+           return -1.0;
+       }
+       //check diagonals for O win
+       if (state.mBoard[0][0] == GameState::O &&
+           state.mBoard[1][1] == GameState::O &&
+           state.mBoard[2][2] == GameState::O)
+       {
+           return 1.0;
+       }
+       else if (state.mBoard[0][2] == GameState::O &&
+                state.mBoard[1][1] == GameState::O &&
+                state.mBoard[2][0] == GameState::O)
+       {
+           return 1.0;
+       }
+    //if no winners and no empty spaces left, then it's a tie
+    return 0.0;
 }
 
 // Function: MinPlayer
@@ -73,7 +134,7 @@ float GetScore(const GameState& state)
 //        -1.0 to indicate X wins on this board
 float MinPlayer(const GTNode* node)
 {
-	// TODO: IMPLEMENT
+	//MinPlayer in this game is X, wants to minimize score!
 	return 0.0; // FIX RETURN VALUE
 }
 
@@ -86,7 +147,7 @@ float MinPlayer(const GTNode* node)
 //        -1.0 to indicate X wins on this board
 float MaxPlayer(const GTNode* node)
 {
-	// TODO: IMPLEMENT
+	//MaxPlayer in this game is O, wants to maximize score!
 	return 0.0; // FIX RETURN VALUE
 }
 
@@ -107,5 +168,6 @@ const GTNode* MinimaxDecide(const GTNode* root)
 unsigned pickMove(const GameState& board)
 {
 	// TODO: IMPLEMENT
-	return 0; // FIX RETURN VALUE
+    
+	return 1; // FIX RETURN VALUE
 }
