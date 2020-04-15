@@ -109,7 +109,8 @@ TEST_CASE("Student tests", "[student]")
         bool xPlayer = true;
         GenStates(root, xPlayer);
         REQUIRE(root->mChildren[0]->mState.mBoard[0][0] == GameState::X);
-        REQUIRE(root->mChildren[0]->mState.mBoard[0][1] == GameState::X);
+        REQUIRE(root->mChildren[1]->mState.mBoard[0][1] == GameState::X);
+        REQUIRE(root->mChildren[2]->mState.mBoard[0][2] == GameState::X);
         //etc etc???
         //test GetScore() function from manual board
         GTNode* testScore = new GTNode;
@@ -132,6 +133,10 @@ TEST_CASE("Student tests", "[student]")
         testScore->mState.mBoard[2][2] = GameState::X;
         //test for X win
         REQUIRE(GetScore(testScore->mState) == -1);
+        //test MinPlayer
+        //test MaxPlayer
+        //test MinimaxDecide
+        //test pickMove
         
     }
 }
