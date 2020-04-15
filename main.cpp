@@ -21,7 +21,7 @@ int main(int argc, const char* argv[])
     //set player to X first
     std::string player = "X";
 
-    while (game.getWinner() == ' ')
+    while (1)
     {
         //draw game board
         term.clear();
@@ -34,13 +34,23 @@ int main(int argc, const char* argv[])
         ss << "\n\n\n\n";
         
         ss<< "___________________________________\n";
-        
-        term.appendText(ss.str());
-        pause(1000);
-        
+        //check if game is over
+        if(game.getWinner() == 'N')
+        {
+            term.appendText("!!!!!!!!!!!! TIE GAME !!!!!!!!!!!!");
+        }
+        if(game.getWinner() == 'O')
+        {
+            term.appendText("!!!!!!!!!!!!! O WINS !!!!!!!!!!!!!");
+        }
+        if(game.getWinner() == 'X')
+        {
+            term.appendText("!!!!!!!!!!!!! X WINS !!!!!!!!!!!!!");
+        }
         if(player == "X")
         {
-            term.appendText("X's move...");
+            ss << "X's move...";
+            term.appendText(ss.str());
             pause(1000);
             while (term.hasEvents())
             {
@@ -53,8 +63,6 @@ int main(int argc, const char* argv[])
                         key == 7 || key == 8 || key == 9)
                     {
                         state = key;
-                        ss << key;
-                        term.appendText(ss.str());
                     }
                     else if (key == 0)
                     {
@@ -75,6 +83,7 @@ int main(int argc, const char* argv[])
                         //put X in first square
                         board[0][0] = 'X';
                         game.setSquareState(1, GameState::X);
+                        ss << 1;
                     }
                     break;
             case 2:
@@ -88,6 +97,7 @@ int main(int argc, const char* argv[])
                         //put X in second square
                         board[0][1] = 'X';
                         game.setSquareState(2, GameState::X);
+                        ss << 2;
                     }
                     break;
             case 3:
@@ -101,6 +111,7 @@ int main(int argc, const char* argv[])
                         //put X in third square
                         board[0][2] = 'X';
                         game.setSquareState(3, GameState::X);
+                        ss << 3;
                     }
                     break;
             case 4:
@@ -114,6 +125,7 @@ int main(int argc, const char* argv[])
                         //put X in fourth square
                         board[1][0] = 'X';
                         game.setSquareState(4, GameState::X);
+                        ss << 4;
                     }
                     break;
             case 5:
@@ -127,6 +139,7 @@ int main(int argc, const char* argv[])
                         //put X in fifth square
                         board[1][1] = 'X';
                         game.setSquareState(5, GameState::X);
+                        ss << 5;
                     }
                     break;
             case 6:
@@ -140,6 +153,7 @@ int main(int argc, const char* argv[])
                         //put X in sixth square
                         board[1][2] = 'X';
                         game.setSquareState(6, GameState::X);
+                        ss << 6;
                     }
                     break;
             case 7:
@@ -153,6 +167,7 @@ int main(int argc, const char* argv[])
                         //put X in seventh square
                         board[2][0] = 'X';
                         game.setSquareState(7, GameState::X);
+                        ss << 7;
                     }
                     break;
             case 8:
@@ -166,6 +181,7 @@ int main(int argc, const char* argv[])
                         //put X in eighth square
                         board[2][1] = 'X';
                         game.setSquareState(8, GameState::X);
+                        ss << 8;
                     }
                     break;
             case 9:
@@ -179,16 +195,58 @@ int main(int argc, const char* argv[])
                         //put X in ninth square
                         board[2][2] = 'X';
                         game.setSquareState(9, GameState::X);
+                        ss << 9;
                     }
                     break;
             }
+            term.appendText(ss.str());
+            pause(1000);
         }
         else if(player == "O")
         {
-            term.appendText("O's move...");
+            ss << "O's move...";
             pause(1000);
             int move = pickMove(game.getBoard());
+            std::string text = std::to_string(move);
+            ss << move;
             game.setSquareState(move, GameState::O);
+            term.appendText(ss.str());
+            if(move == 1)
+            {
+                board[0][0] = 'O';
+            }
+            if(move == 2)
+            {
+                board[0][1] = 'O';
+            }
+            if(move == 3)
+            {
+                board[0][2] = 'O';
+            }
+            if(move == 4)
+            {
+                board[1][0] = 'O';
+            }
+            if(move == 5)
+            {
+                board[1][1] = 'O';
+            }
+            if(move == 6)
+            {
+                board[1][2] = 'O';
+            }
+            if(move == 7)
+            {
+                board[2][0] = 'O';
+            }
+            if(move == 8)
+            {
+                board[2][1] = 'O';
+            }
+            if(move == 9)
+            {
+                board[2][2] = 'O';
+            }
         }
         //switch players
         if(player == "X")
@@ -199,18 +257,6 @@ int main(int argc, const char* argv[])
         {
             player = "X";
         }
-    }
-    if(game.getWinner() == 'N')
-    {
-        term.appendText("!!!!!!!!!!!! TIE GAME !!!!!!!!!!!!");
-    }
-    if(game.getWinner() == 'O')
-    {
-        term.appendText("!!!!!!!!!!!!! O WINS !!!!!!!!!!!!!");
-    }
-    if(game.getWinner() == 'X')
-    {
-        term.appendText("!!!!!!!!!!!!! X WINS !!!!!!!!!!!!!");
     }
 	return 0;
 }

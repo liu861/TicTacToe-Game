@@ -141,8 +141,8 @@ float MinPlayer(const GTNode* node)
         return GetScore(node->mState);
     }
     //otherwise return the smallest maximum score of all child nodes
-    //set minScore to infinity
-    float minScore = std::numeric_limits<float>::infinity();
+    //set minScore to really big number
+    float minScore = 1000.0;
     //iterate through all child nodes/subtrees
     for(const GTNode* child : node->mChildren)
     {
@@ -169,8 +169,8 @@ float MaxPlayer(const GTNode* node)
         return GetScore(node->mState);
     }
     //otherwise return the largest minimum score of all child nodes
-    //set maxScore to negative infinity
-    float maxScore = -std::numeric_limits<float>::infinity();
+    //set maxScore to really negative number
+    float maxScore = -1000.0;
     //iterate through all child nodes/subtrees
     for(const GTNode* child : node->mChildren)
     {
@@ -187,12 +187,11 @@ float MaxPlayer(const GTNode* node)
 // Returns: The GTNode* with the winning game state
 const GTNode* MinimaxDecide(const GTNode* root)
 {
-	// TODO: IMPLEMENT
     //go through each subtree and find the maximum value as given by MinPlayer
     //because that gives the move that if worst for X, best for O
     //start with given node(root), which is current state of the game
     const GTNode* move = nullptr;
-    float maxScore = -std::numeric_limits<float>::infinity();
+    float maxScore = -1000.0;
     //go through each child node of the root
     for(const GTNode* child : root->mChildren)
     {
@@ -218,10 +217,29 @@ unsigned pickMove(const GameState& board)
     //determine the GameState that AI wants to select
     //create a root to set to current board's state
     GTNode* root = new GTNode;
+    //create new node that is the winning state
+    const GTNode* winState = nullptr;
     //set root's GameState to given state
     root->mState = board;
-    //create new node that is the winning subtree
-    const GTNode* winState = MinimaxDecide(root);
+    //generate all subtrees states
+    GenStates(root, false);
+    for(const GTNode* child : root->mChildren)
+    {
+        if(MaxPlayer(child) == 1.0)
+        {
+            winState = child;
+        }
+    }
+    if(winState == nullptr)
+    {
+        for(const GTNode* child : root->mChildren)
+        {
+            if(MaxPlayer(child) == 0.0)
+            {
+                winState = child;
+            }
+        }
+    }
     int row = 0;
     int col = 0;
     for(int i = 0; i < 3; i++)
