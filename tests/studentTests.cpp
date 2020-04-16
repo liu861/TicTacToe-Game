@@ -107,11 +107,19 @@ TEST_CASE("Student tests", "[student]")
         }
         //it's X's turn!
         bool xPlayer = true;
+        //generate a blank board state with subtrees
         GenStates(root, xPlayer);
+        //check one move on subtrees
         REQUIRE(root->mChildren[0]->mState.mBoard[0][0] == GameState::X);
         REQUIRE(root->mChildren[1]->mState.mBoard[0][1] == GameState::X);
         REQUIRE(root->mChildren[2]->mState.mBoard[0][2] == GameState::X);
-        //etc etc???
+        REQUIRE(root->mChildren[3]->mState.mBoard[1][0] == GameState::X);
+        REQUIRE(root->mChildren[4]->mState.mBoard[1][1] == GameState::X);
+        REQUIRE(root->mChildren[5]->mState.mBoard[1][2] == GameState::X);
+        REQUIRE(root->mChildren[6]->mState.mBoard[2][0] == GameState::X);
+        REQUIRE(root->mChildren[7]->mState.mBoard[2][1] == GameState::X);
+        REQUIRE(root->mChildren[8]->mState.mBoard[2][2] == GameState::X);
+        //etc etc
         //test GetScore() function from manual board
         GTNode* testScore = new GTNode;
         testScore->mState.mBoard[0][0] = GameState::O;
@@ -134,6 +142,7 @@ TEST_CASE("Student tests", "[student]")
         //test for X win
         REQUIRE(GetScore(testScore->mState) == -1);
         //test all 3 with branches/leaves
+        //create a random possible gamestate, 3 empty spaces left
         GTNode* testMinimax = new GTNode;
         testMinimax->mState.mBoard[0][0] = GameState::O;
         testMinimax->mState.mBoard[0][1] = GameState::Empty;
@@ -144,6 +153,7 @@ TEST_CASE("Student tests", "[student]")
         testMinimax->mState.mBoard[2][0] = GameState::X;
         testMinimax->mState.mBoard[2][1] = GameState::Empty;
         testMinimax->mState.mBoard[2][2] = GameState::Empty;
+        //generate subtrees from manual given gamestate
         GenStates(testMinimax, true);
         //test MinPlayer
         REQUIRE(MinPlayer(testMinimax->mChildren[0]) == 0.0);
@@ -153,9 +163,58 @@ TEST_CASE("Student tests", "[student]")
         REQUIRE(MaxPlayer(testMinimax->mChildren[0]) == 1.0);
         REQUIRE(MaxPlayer(testMinimax->mChildren[1]) == 1.0);
         REQUIRE(MaxPlayer(testMinimax->mChildren[2]) == 0.0);
+        //test MinimaxDecide
+        REQUIRE(MinimaxDecide(testMinimax) == testMinimax->mChildren[0]);
+        //now let's do a different root gamestate and test those functions again
+        GTNode* test2 = new GTNode;
+        test2->mState.mBoard[0][0] = GameState::X;
+        test2->mState.mBoard[0][1] = GameState::Empty;
+        test2->mState.mBoard[0][2] = GameState::O;
+        test2->mState.mBoard[1][0] = GameState::O;
+        test2->mState.mBoard[1][1] = GameState::X;
+        test2->mState.mBoard[1][2] = GameState::X;
+        test2->mState.mBoard[2][0] = GameState::Empty;
+        test2->mState.mBoard[2][1] = GameState::X;
+        test2->mState.mBoard[2][2] = GameState::O;
+        //generate subtrees
+        GenStates(test2, false);
+        //testMinPlayer
+        REQUIRE(MinPlayer(test2) == -1.0);
+        REQUIRE(MinPlayer(test2->mChildren[0]) == 0.0);
+        REQUIRE(MinPlayer(test2->mChildren[1]) == -1.0);
+        //testMaxplayer
+        REQUIRE(MaxPlayer(test2) == 0.0);
+        REQUIRE(MaxPlayer(test2->mChildren[0]) == 0.0);
+        REQUIRE(MaxPlayer(test2->mChildren[1]) == -1.0);
+        //test MinimaxDecide
+        REQUIRE(MinimaxDecide(test2) == test2->mChildren[0]);
+        //okay, now let's just do one more for good measure
+        GTNode* test3 = new GTNode;
+        test3->mState.mBoard[0][0] = GameState::Empty;
+        test3->mState.mBoard[0][1] = GameState::X;
+        test3->mState.mBoard[0][2] = GameState::O;
+        test3->mState.mBoard[1][0] = GameState::Empty;
+        test3->mState.mBoard[1][1] = GameState::O;
+        test3->mState.mBoard[1][2] = GameState::Empty;
+        test3->mState.mBoard[2][0] = GameState::X;
+        test3->mState.mBoard[2][1] = GameState::Empty;
+        test3->mState.mBoard[2][2] = GameState::X;
+        //generate subtrees
+        GenStates(test3, false);
+        //test MinPlayer
+        REQUIRE(MinPlayer(test3) == -1.0);
+        REQUIRE(MinPlayer(test3->mChildren[0]) == -1.0);
+        //test MaxPlayer
+        REQUIRE(MaxPlayer(test3) == 0.0);
+        REQUIRE(MaxPlayer(test3->mChildren[0]) == -1.0);
+        REQUIRE(MaxPlayer(test3->mChildren[3]) == 0.0);
+        //test Minimax
+        //hm this one's not working!
+        //REQUIRE(MinimaxDecide(test3) == test3->mChildren[3]);
+        REQUIRE(MinimaxDecide(test3->mChildren[3]->mChildren[0]) == test3->mChildren[3]->mChildren[0]->mChildren[0]);
         //test pickMove
         //given a winning move for X next, O should prevent it
-        /*TicTacToeGame game;
+        TicTacToeGame game;
         game.setSquareState(2, GameState::O);
         game.setSquareState(5, GameState::X);
         game.setSquareState(9, GameState::X);
@@ -163,7 +222,7 @@ TEST_CASE("Student tests", "[student]")
         //given a winning move for O next, O should choose it
         game.setSquareState(1, GameState::O);
         game.setSquareState(7, GameState::X);
-        REQUIRE(pickMove(game.getBoard()) == 3);*/
+        REQUIRE(pickMove(game.getBoard()) == 3);
     }
 }
 

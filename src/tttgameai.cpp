@@ -36,7 +36,7 @@ void GenStates(GTNode* root, bool xPlayer)
             }
         }
     }
-    //generate child nodes for all children until leaves
+    //generate child nodes for all children until leaf
     //using recursion
     if(!root->mChildren.empty())
     {
