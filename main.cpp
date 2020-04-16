@@ -26,6 +26,7 @@ int main(int argc, const char* argv[])
     {
         //draw game board
         term.clear();
+        ss.str(std::string());
         ss << "\n\n\n\n";
         ss << "\t    " << board[0][0] << " | " << board[0][1] << " | " << board[0][2] << "\n";
         ss << "\t   -----------\n";
@@ -35,29 +36,30 @@ int main(int argc, const char* argv[])
         ss << "\n\n\n\n";
         
         ss << "__________________________________\n";
-        term.appendText(ss.str());
-        pause(5000);
         //check if game is over
         if(game.getWinner() == 'N')
         {
-            term.appendText("!!!!!!!!!!!! TIE GAME !!!!!!!!!!!!");
-            pause(5000);
+            ss << "!!!!!!!!!!!! TIE GAME !!!!!!!!!!!!";
+            term.appendText(ss.str());
+            pause(10000);
         }
         if(game.getWinner() == 'O')
         {
-            term.appendText("!!!!!!!!!!!!! O WINS !!!!!!!!!!!!!");
-            pause(5000);
+            ss << "!!!!!!!!!!!!! O WINS !!!!!!!!!!!!!";
+            term.appendText(ss.str());
+            pause(10000);
         }
         if(game.getWinner() == 'X')
         {
-            term.appendText("!!!!!!!!!!!!! X WINS !!!!!!!!!!!!!");
-            pause(5000);
+            ss << "!!!!!!!!!!!!! X WINS !!!!!!!!!!!!!";
+            term.appendText(ss.str());
+            pause(10000);
         }
         if(player == "X")
         {
             ss << "X's move...";
             term.appendText(ss.str());
-            pause(5000);
+            pause(10000);
             while (term.hasEvents())
             {
                 GEvent e = term.getEvent();
@@ -86,7 +88,7 @@ int main(int argc, const char* argv[])
                     //put X in first square
                     board[0][0] = 'X';
                     game.setSquareState(1, GameState::X);
-                    ss << 1;
+                    term.appendText("1");
                     break;
             case 2:
                     if(board[0][1] != '2')
@@ -96,7 +98,7 @@ int main(int argc, const char* argv[])
                     //put X in second square
                     board[0][1] = 'X';
                     game.setSquareState(2, GameState::X);
-                    ss << 2;
+                    term.appendText("2");
                     break;
             case 3:
                     if(board[0][2] != '3')
@@ -107,7 +109,7 @@ int main(int argc, const char* argv[])
                     //put X in third square
                     board[0][2] = 'X';
                     game.setSquareState(3, GameState::X);
-                    ss << 3;
+                    term.appendText("3");
                     break;
             case 4:
                     if(board[1][0] != '4')
@@ -117,7 +119,7 @@ int main(int argc, const char* argv[])
                     //put X in fourth square
                     board[1][0] = 'X';
                     game.setSquareState(4, GameState::X);
-                    ss << 4;
+                    term.appendText("4");
                     break;
             case 5:
                     if(board[1][1] != '5')
@@ -127,7 +129,7 @@ int main(int argc, const char* argv[])
                     //put X in fifth square
                     board[1][1] = 'X';
                     game.setSquareState(5, GameState::X);
-                    ss << 5;
+                    term.appendText("5");
                     break;
             case 6:
                     //put player's symbol in the sixth square
@@ -138,7 +140,7 @@ int main(int argc, const char* argv[])
                     //put X in sixth square
                     board[1][2] = 'X';
                     game.setSquareState(6, GameState::X);
-                    ss << 6;
+                    term.appendText("6");
                     break;
             case 7:
                     //put player's symbol in the seventh square
@@ -149,7 +151,7 @@ int main(int argc, const char* argv[])
                     //put X in seventh square
                     board[2][0] = 'X';
                     game.setSquareState(7, GameState::X);
-                    ss << 7;
+                    term.appendText("7");
                     break;
             case 8:
                     //put player's symbol in the eighth square
@@ -160,7 +162,7 @@ int main(int argc, const char* argv[])
                     //put X in eighth square
                     board[2][1] = 'X';
                     game.setSquareState(8, GameState::X);
-                    ss << 8;
+                    term.appendText("8");
                     break;
             case 9:
                     //put player's symbol in the ninth square
@@ -171,21 +173,19 @@ int main(int argc, const char* argv[])
                     //put X in ninth square
                     board[2][2] = 'X';
                     game.setSquareState(9, GameState::X);
-                    ss << 9;
+                    term.appendText("9");
                     break;
             }
-            term.appendText(ss.str());
-            pause(1000);
         }
         else if(player == "O")
         {
             ss << "O's move...";
-            pause(1000);
-            int move = pickMove(game.getBoard());
-            std::string text = std::to_string(move);
-            ss << move;
-            game.setSquareState(move, GameState::O);
             term.appendText(ss.str());
+            pause(10000);
+            int move = pickMove(game.getBoard());
+            game.setSquareState(move, GameState::O);
+            term.appendText(std::to_string(move));
+            pause(10000);
             if(move == 1)
             {
                 board[0][0] = 'O';
@@ -232,8 +232,6 @@ int main(int argc, const char* argv[])
         {
             player = "X";
         }
-        term.appendText(ss.str());
-        pause(5000);
     }
 	return 0;
 }
