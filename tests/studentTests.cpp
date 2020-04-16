@@ -148,8 +148,7 @@ TEST_CASE("Student tests", "[student]")
         //test MinPlayer
         REQUIRE(MinPlayer(testMinimax->mChildren[0]) == 0.0);
         REQUIRE(MinPlayer(testMinimax->mChildren[1]) == -1.0);
-        REQUIRE(MinPlayer(testMinimax->mChildren[2]->mChildren[0]->mChildren[0]) == -1.0);
-        REQUIRE(MinPlayer(testMinimax->mChildren[2]->mChildren[1]->mChildren[0]) == 0.0);
+        REQUIRE(MinPlayer(testMinimax->mChildren[2]) == -1.0);
         //test MaxPlayer
         REQUIRE(MaxPlayer(testMinimax->mChildren[0]) == 1.0);
         REQUIRE(MaxPlayer(testMinimax->mChildren[1]) == 1.0);
