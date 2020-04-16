@@ -20,7 +20,7 @@ void GenStates(GTNode* root, bool xPlayer)
                 GTNode* child = new GTNode;
                 
                 //set child's board to root's board
-                child->mState.mBoard[i][j] = root->mState.mBoard[i][j];
+                child->mState = root->mState;
                 
                 //set empty position to player's symbol
                 if(xPlayer)
@@ -31,23 +31,26 @@ void GenStates(GTNode* root, bool xPlayer)
                 {
                     child->mState.mBoard[i][j] = GameState::O;
                 }
-                
                 //add child to vector of children
                 root->mChildren.push_back(child);
             }
         }
     }
-    //generate more child nodes for each child, using recursion
-    for(int i = 0; i < root->mChildren.size(); i++)
+    //generate child nodes for all children until leaves
+    //using recursion
+    if(!root->mChildren.empty())
     {
-        if(xPlayer)
+        for(int i = 0; i < root->mChildren.size(); i++)
         {
-            GenStates(root->mChildren[i], false);
-        }
-        //otherwise, it's X's turn again!
-        else
-        {
-            GenStates(root->mChildren[i], true);
+            if(xPlayer)
+            {
+                GenStates(root->mChildren[i], false);
+            }
+            //otherwise, it's X's turn again!
+            else
+            {
+                GenStates(root->mChildren[i], true);
+            }
         }
     }
 }

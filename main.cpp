@@ -80,7 +80,7 @@ int main(int argc, const char* argv[])
             }
             switch(state)
             {
-            case 1:
+            case '1':
                     if(board[0][0] != '1')
                     {
                         break;
@@ -90,7 +90,7 @@ int main(int argc, const char* argv[])
                     game.setSquareState(1, GameState::X);
                     term.appendText("1");
                     break;
-            case 2:
+            case '2':
                     if(board[0][1] != '2')
                     {
                         break;
@@ -100,7 +100,7 @@ int main(int argc, const char* argv[])
                     game.setSquareState(2, GameState::X);
                     term.appendText("2");
                     break;
-            case 3:
+            case '3':
                     if(board[0][2] != '3')
                     {
                         break;
@@ -111,7 +111,7 @@ int main(int argc, const char* argv[])
                     game.setSquareState(3, GameState::X);
                     term.appendText("3");
                     break;
-            case 4:
+            case '4':
                     if(board[1][0] != '4')
                     {
                         break;
@@ -121,7 +121,7 @@ int main(int argc, const char* argv[])
                     game.setSquareState(4, GameState::X);
                     term.appendText("4");
                     break;
-            case 5:
+            case '5':
                     if(board[1][1] != '5')
                     {
                         break;
@@ -131,7 +131,7 @@ int main(int argc, const char* argv[])
                     game.setSquareState(5, GameState::X);
                     term.appendText("5");
                     break;
-            case 6:
+            case '6':
                     //put player's symbol in the sixth square
                     if(board[1][2] != '6')
                     {
@@ -142,7 +142,7 @@ int main(int argc, const char* argv[])
                     game.setSquareState(6, GameState::X);
                     term.appendText("6");
                     break;
-            case 7:
+            case '7':
                     //put player's symbol in the seventh square
                     if(board[2][0] != '7')
                     {
@@ -153,7 +153,7 @@ int main(int argc, const char* argv[])
                     game.setSquareState(7, GameState::X);
                     term.appendText("7");
                     break;
-            case 8:
+            case '8':
                     //put player's symbol in the eighth square
                     if(board[2][1] != '8')
                     {
@@ -164,7 +164,7 @@ int main(int argc, const char* argv[])
                     game.setSquareState(8, GameState::X);
                     term.appendText("8");
                     break;
-            case 9:
+            case '9':
                     //put player's symbol in the ninth square
                     if(board[2][2] != '9')
                     {
