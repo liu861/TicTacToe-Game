@@ -34,22 +34,20 @@ void GenStates(GTNode* root, bool xPlayer)
                 
                 //add child to vector of children
                 root->mChildren.push_back(child);
-                
-                //generate more child nodes for the child, using recursion
-                if(child->mState.mBoard[i][j] == GameState::Empty)
-                {
-                    //if it was just X's turn, now it's O's turn
-                    if(xPlayer)
-                    {
-                        GenStates(child, false);
-                    }
-                    //otherwise, it's X's turn again!
-                    else
-                    {
-                        GenStates(child, true);
-                    }
-                }
             }
+        }
+    }
+    //generate more child nodes for each child, using recursion
+    for(int i = 0; i < root->mChildren.size(); i++)
+    {
+        if(xPlayer)
+        {
+            GenStates(root->mChildren[i], false);
+        }
+        //otherwise, it's X's turn again!
+        else
+        {
+            GenStates(root->mChildren[i], true);
         }
     }
 }

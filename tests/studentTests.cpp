@@ -133,14 +133,27 @@ TEST_CASE("Student tests", "[student]")
         testScore->mState.mBoard[2][2] = GameState::X;
         //test for X win
         REQUIRE(GetScore(testScore->mState) == -1);
+        //test all 3 with branches/leaves
+        GTNode* testMinimax = new GTNode;
+        testMinimax->mState.mBoard[0][0] = GameState::O;
+        testMinimax->mState.mBoard[0][1] = GameState::Empty;
+        testMinimax->mState.mBoard[0][2] = GameState::X;
+        testMinimax->mState.mBoard[1][0] = GameState::X;
+        testMinimax->mState.mBoard[1][1] = GameState::O;
+        testMinimax->mState.mBoard[1][2] = GameState::O;
+        testMinimax->mState.mBoard[2][0] = GameState::X;
+        testMinimax->mState.mBoard[2][1] = GameState::Empty;
+        testMinimax->mState.mBoard[2][2] = GameState::Empty;
+        GenStates(testMinimax, true);
         //test MinPlayer
-        //empty board
-        REQUIRE(MinPlayer(root) == 0.0);
+        REQUIRE(MinPlayer(testMinimax->mChildren[0]) == 0.0);
+        REQUIRE(MinPlayer(testMinimax->mChildren[1]) == -1.0);
+        REQUIRE(MinPlayer(testMinimax->mChildren[2]->mChildren[0]->mChildren[0]) == -1.0);
+        REQUIRE(MinPlayer(testMinimax->mChildren[2]->mChildren[1]->mChildren[0]) == 0.0);
         //test MaxPlayer
-        //empty board
-        REQUIRE(MaxPlayer(root) == 0.0);
-        //test MinimaxDecide
-        //???
+        REQUIRE(MaxPlayer(testMinimax->mChildren[0]) == 1.0);
+        REQUIRE(MaxPlayer(testMinimax->mChildren[1]) == 1.0);
+        REQUIRE(MaxPlayer(testMinimax->mChildren[2]) == 0.0);
         //test pickMove
         //given a winning move for X next, O should prevent it
         /*TicTacToeGame game;
