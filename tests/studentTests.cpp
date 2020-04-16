@@ -210,7 +210,7 @@ TEST_CASE("Student tests", "[student]")
         REQUIRE(MaxPlayer(test3->mChildren[3]) == 0.0);
         //test Minimax
         //hm this one's not working!
-        //REQUIRE(MinimaxDecide(test3) == test3->mChildren[3]);
+        REQUIRE(MinimaxDecide(test3) == test3->mChildren[3]);
         REQUIRE(MinimaxDecide(test3->mChildren[3]->mChildren[0]) == test3->mChildren[3]->mChildren[0]->mChildren[0]);
         //test pickMove
         //given a winning move for X next, O should prevent it
@@ -223,6 +223,17 @@ TEST_CASE("Student tests", "[student]")
         game.setSquareState(1, GameState::O);
         game.setSquareState(7, GameState::X);
         REQUIRE(pickMove(game.getBoard()) == 3);
+        //test again for a different board state
+        game.setSquareState(1, GameState::Empty);
+        game.setSquareState(2, GameState::X);
+        game.setSquareState(3, GameState::O);
+        game.setSquareState(4, GameState::Empty);
+        game.setSquareState(5, GameState::O);
+        game.setSquareState(6, GameState::Empty);
+        game.setSquareState(7, GameState::X);
+        game.setSquareState(8, GameState::Empty);
+        game.setSquareState(9, GameState::X);
+        REQUIRE(pickMove(game.getBoard()) == 8);
     }
 }
 

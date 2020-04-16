@@ -36,7 +36,7 @@ void GenStates(GTNode* root, bool xPlayer)
             }
         }
     }
-    //generate child nodes for all children until leaf
+    //generate child nodes for all children of children
     //using recursion
     if(!root->mChildren.empty())
     {
@@ -203,7 +203,7 @@ const GTNode* MinimaxDecide(const GTNode* root)
         if(largest > maxScore)
         {
             maxScore = largest;
-            //set move to child
+            //set move node to child
             move = child;
         }
     }
@@ -225,7 +225,7 @@ unsigned pickMove(const GameState& board)
     root->mState = board;
     //generate all subtrees states
     GenStates(root, false);
-    //set winState to subtree!
+    //set winState to subtree given by Minimax
     winState = MinimaxDecide(root);
     //find which square O should be in
     int row = 0;
