@@ -3,8 +3,6 @@
 #include "tttgameai.h"
 #include <iostream>
 #include <string>
-#include <fstream>
-#include <sstream>
 
 int main(int argc, const char* argv[])
 {
@@ -13,52 +11,127 @@ int main(int argc, const char* argv[])
 	term.showCursor(false);
 
     char state = '0'; // The game board's state
-    //creating game board for output in terminal
-    char board[3][3] = {{'1', '2', '3'}, {'4', '5', '6'}, {'7', '8', '9'}};
+    //create TicTacToe game
     TicTacToeGame game;
-    //create stringstream for appending text
-    std::stringstream ss;
     
     //set player to X first
     std::string player = "X";
+    //create board string for output
+    std::string board;
 
     while (1)
     {
         //draw game board
         term.clear();
-        ss.str(std::string());
-        ss << "\n\n\n\n";
-        ss << "\t    " << board[0][0] << " | " << board[0][1] << " | " << board[0][2] << "\n";
-        ss << "\t   -----------\n";
-        ss << "\t    " << board[1][0] << " | " << board[1][1] << " | " << board[1][2] << "\n";
-        ss << "\t   -----------\n";
-        ss << "\t    " << board[2][0] << " | " << board[2][1] << " | " << board[2][2] << "\n";
-        ss << "\n\n\n\n";
+        board.clear();
+        board += "\n\n\n\n";
+        for(int i = 0; i < 3; i++)
+        {
+            for(int j = 0; j < 3; j++)
+            {
+                if(i == 0 && j == 0)
+                {
+                    board += "\t    ";
+                }
+                if(i == 1 && j == 0)
+                {
+                    board += "\t    ";
+                }
+                if(i == 2 && j == 0)
+                {
+                    board += "\t    ";
+                }
+                if(game.getBoard().mBoard[i][j] == GameState::Empty)
+                {
+                    if(i == 0 && j == 0)
+                    {
+                        board += "1";
+                    }
+                    if(i == 0 && j == 1)
+                    {
+                        board += "2";
+                    }
+                    if(i == 0 && j == 2)
+                    {
+                        board += "3";
+                    }
+                    if(i == 1 && j == 0)
+                    {
+                        board += "4";
+                    }
+                    if(i == 1 && j == 1)
+                    {
+                        board += "5";
+                    }
+                    if(i == 1 && j == 2)
+                    {
+                        board += "6";
+                    }
+                    if(i == 2 && j == 0)
+                    {
+                        board += "7";
+                    }
+                    if(i == 2 && j == 1)
+                    {
+                        board += "8";
+                    }
+                    if(i == 2 && j == 2)
+                    {
+                        board += "9";
+                    }
+                }
+                else if(game.getBoard().mBoard[i][j] == GameState::X)
+                {
+                    board += "X";
+                }
+                else if(game.getBoard().mBoard[i][j] == GameState::O)
+                {
+                    board += "O";
+                }
+                if(j < 2)
+                {
+                    board += " | ";
+                }
+                if(j == 2)
+                {
+                    board += "\n";
+                    if(i < 2)
+                    {
+                        board += "\t   -----------\n";
+                    }
+                }
+                    
+            }
+        }
+        board += "\n\n\n\n";
+        board += "__________________________________\n";
         
-        ss << "__________________________________\n";
         //check if game is over
         if(game.getWinner() == 'N')
         {
-            ss << "!!!!!!!!!!!! TIE GAME !!!!!!!!!!!!";
-            term.appendText(ss.str());
-            pause(10000);
+            board += "!!!!!!!!!!!! TIE GAME !!!!!!!!!!!!";
+            term.appendText(board);
+            pause(5000);
+            return 0;
         }
         if(game.getWinner() == 'O')
         {
-            ss << "!!!!!!!!!!!!! O WINS !!!!!!!!!!!!!";
-            term.appendText(ss.str());
-            pause(10000);
+            board += "!!!!!!!!!!!!! O WINS !!!!!!!!!!!!!";
+            term.appendText(board);
+            pause(5000);
+            return 0;
         }
         if(game.getWinner() == 'X')
         {
-            ss << "!!!!!!!!!!!!! X WINS !!!!!!!!!!!!!";
-            term.appendText(ss.str());
-            pause(10000);
+            board += "!!!!!!!!!!!!! X WINS !!!!!!!!!!!!!";
+            term.appendText(board);
+            pause(5000);
+            return 0;
         }
         if(player == "X")
         {
-            ss << "X's move...";
-            term.appendText(ss.str());
+            board += "X's move...";
+            term.appendText(board);
             pause(10000);
             while (term.hasEvents())
             {
@@ -81,97 +154,38 @@ int main(int argc, const char* argv[])
             switch(state)
             {
             case '1':
-                    if(board[0][0] != '1')
-                    {
-                        break;
-                    }
-                    //put X in first square
-                    board[0][0] = 'X';
                     game.setSquareState(1, GameState::X);
                     term.appendText("1");
                     break;
             case '2':
-                    if(board[0][1] != '2')
-                    {
-                        break;
-                    }
-                    //put X in second square
-                    board[0][1] = 'X';
                     game.setSquareState(2, GameState::X);
                     term.appendText("2");
                     break;
             case '3':
-                    if(board[0][2] != '3')
-                    {
-                        break;
-                    }
-                  
-                    //put X in third square
-                    board[0][2] = 'X';
                     game.setSquareState(3, GameState::X);
                     term.appendText("3");
                     break;
             case '4':
-                    if(board[1][0] != '4')
-                    {
-                        break;
-                    }
-                    //put X in fourth square
-                    board[1][0] = 'X';
                     game.setSquareState(4, GameState::X);
                     term.appendText("4");
                     break;
             case '5':
-                    if(board[1][1] != '5')
-                    {
-                        break;
-                    }
-                    //put X in fifth square
-                    board[1][1] = 'X';
                     game.setSquareState(5, GameState::X);
                     term.appendText("5");
                     break;
             case '6':
-                    //put player's symbol in the sixth square
-                    if(board[1][2] != '6')
-                    {
-                        break;
-                    }
-                    //put X in sixth square
-                    board[1][2] = 'X';
                     game.setSquareState(6, GameState::X);
                     term.appendText("6");
                     break;
             case '7':
-                    //put player's symbol in the seventh square
-                    if(board[2][0] != '7')
-                    {
-                        break;
-                    }
-                    //put X in seventh square
-                    board[2][0] = 'X';
                     game.setSquareState(7, GameState::X);
                     term.appendText("7");
                     break;
             case '8':
-                    //put player's symbol in the eighth square
-                    if(board[2][1] != '8')
-                    {
-                        break;
-                    }
-                    //put X in eighth square
-                    board[2][1] = 'X';
                     game.setSquareState(8, GameState::X);
                     term.appendText("8");
                     break;
             case '9':
-                    //put player's symbol in the ninth square
-                    if(board[2][2] != '9')
-                    {
-                        break;
-                    }
-                    //put X in ninth square
-                    board[2][2] = 'X';
                     game.setSquareState(9, GameState::X);
                     term.appendText("9");
                     break;
@@ -179,49 +193,13 @@ int main(int argc, const char* argv[])
         }
         else if(player == "O")
         {
-            ss << "O's move...";
-            term.appendText(ss.str());
-            pause(10000);
+            board += "O's move...";
+            term.appendText(board);
+            //pause(10000);
             int move = pickMove(game.getBoard());
             game.setSquareState(move, GameState::O);
             term.appendText(std::to_string(move));
-            pause(10000);
-            if(move == 1)
-            {
-                board[0][0] = 'O';
-            }
-            if(move == 2)
-            {
-                board[0][1] = 'O';
-            }
-            if(move == 3)
-            {
-                board[0][2] = 'O';
-            }
-            if(move == 4)
-            {
-                board[1][0] = 'O';
-            }
-            if(move == 5)
-            {
-                board[1][1] = 'O';
-            }
-            if(move == 6)
-            {
-                board[1][2] = 'O';
-            }
-            if(move == 7)
-            {
-                board[2][0] = 'O';
-            }
-            if(move == 8)
-            {
-                board[2][1] = 'O';
-            }
-            if(move == 9)
-            {
-                board[2][2] = 'O';
-            }
+            pause(5000);
         }
         //switch players
         if(player == "X")
