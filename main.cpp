@@ -21,9 +21,10 @@ int main(int argc, const char* argv[])
 
     while (1)
     {
-        //draw game board
         term.clear();
+        //clear board
         board.clear();
+        //draw game board
         board += "\n\n\n\n";
         for(int i = 0; i < 3; i++)
         {
@@ -133,19 +134,19 @@ int main(int argc, const char* argv[])
             board += "X's move...";
             term.appendText(board);
             pause(10000);
-            while (term.hasEvents())
+            while(term.hasEvents())
             {
                 GEvent e = term.getEvent();
-                if (e.Type == EventType::KeyDown)
+                if(e.Type == EventType::KeyDown)
                 {
                     int key = e.Event.Key.Code;
-                    if (key == '1' || key == '2' || key == '3' ||
-                        key == '4' || key == '5' || key == '6' ||
-                        key == '7' || key == '8' || key == '9')
+                    if(key == '1' || key == '2' || key == '3' ||
+                       key == '4' || key == '5' || key == '6' ||
+                       key == '7' || key == '8' || key == '9')
                     {
                         state = key;
                     }
-                    else if (key == '0')
+                    else if(key == '0')
                     {
                         return 0;
                     }
