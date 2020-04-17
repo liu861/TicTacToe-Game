@@ -10,7 +10,7 @@ int main(int argc, const char* argv[])
 	GTerminal term(400, 400);
 	term.showCursor(false);
 
-    char state = '0'; // The game board's state
+    char state = '1'; // The game board's state
     //create TicTacToe game
     TicTacToeGame game;
     
