@@ -1,4 +1,4 @@
-# ITP 365 HW06 - Spring 2020 #
+# TicTacToe Game - Spring 2020 #
 
 ## Student information... ##
 Name: Amy (Yue) Liu
@@ -8,4 +8,6 @@ Email: liu861@usc.edu
 Platform: [MAC]
 
 ### Notes ###
-In main.cpp: while(term.hasEvent( )) loop doesn't work, spent hours with TA's and Nathan on trying to get it to work but it won't take in any keystroke from the console. 
+In main.cpp: while(term.hasEvent( )) loop will not take keystrokes if external keyboard or mouse is connected.
+
+This is a C++ program utilizing Game Trees AI to predict the best moves for TicTacToe game. The user will theoretically never win - the computer will always make the most optimal move.
